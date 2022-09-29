@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<main class="container py-4">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h1 class="text-center">Editar Afiliado</h1>
+            {{error}}
+            <form method="POST"class="card card-body">
+
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-success">Actualizar</button>
+
+            </form>
+            <div class="mt-4 d-flex">
+                
+                
+                <form action="{% url 'afiliado_completed' afiliado.id %}" method="POST">
+    
+                    {% csrf_token %}
+                    <button class="btn btn-primary">Archivar</button>
+    
+                </form>
+                &nbsp
+                <form action="{% url 'afiliado_delete' afiliado.id %}" method="POST">
+    
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Borrar</button>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

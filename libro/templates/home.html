@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+{% load static %}
+
+<main class="container mt-4">
+  <section class="card card-body">
+    <div class="container col-xxl-8 px-4">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img src="{% static 'img/Arbol.png' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="350" height="350" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold lh-1 mb-3">
+            {% if user.is_authenticated %}
+            Welcome {{ user.get_username }}
+            {% else %}
+            Home
+            {% endif %}
+          </h1>
+          <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet natus rem sapiente recusandae impedit, porro omnis error deleniti id animi, minus molestias provident tempore harum vitae. Rerum modi numquam minus!</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="/afiliados/"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Lista de Afiliados</button></a>
+            <a class="btn btn-success" href="/afiliados/crear/"><button type="button" class="btn btn-success btn-lg px-4">Crear Afiliado</button></a>
+            {% else %}
+            <a class="btn btn-success" href="/signin"><button type="button" class="btn btn-success btn-lg px-4 me-md-2">Login</button></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      </a>
+      <span class="mb-3 mb-md-0 text-muted"> 2022&copy; Creado por: Nicolas Erazo</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-facebook"></i></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-instagram"></i></svg></a></li>
+      <li class="ms-3"><a class="text-muted" href="#"><i class="fa-brands fa-twitter"></i></a></li>
+    </ul>
+  </footer>
+</div>
+
+{% endblock %}
