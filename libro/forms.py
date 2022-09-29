@@ -18,9 +18,9 @@ class crearAfiliado(forms.ModelForm):
         widgets = {
             'nombres': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_documento' : forms.Select(choices=TIPO_DOCUMENTO, attrs={'class': 'form-select'}),
-            'numero_documento' : forms.TextInput(attrs={'class': 'form-control'}),
+            'numero_documento' : forms.NumberInput(attrs={'class': 'form-control'}),
             'sexo' : forms.Select(choices = GENERO, attrs={'class': 'form-select'}),
-            'telefono' : forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono' : forms.NumberInput(attrs={'class': 'form-control'}),
             'email' : forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
             'nacimiento' : forms.SelectDateWidget(years=FECHA_NACIMIENTO, attrs={'class': 'form-select'}),
