@@ -8,9 +8,9 @@ class Afiliado(models.Model):
     
     nombres = models.CharField(max_length=100)
     tipo_documento = models.CharField(max_length=100)
-    numero_documento = models.IntegerField(blank=True)
+    numero_documento = models.TextField(blank=True, max_length=100)
     sexo = models.CharField(max_length=2)
-    telefono = models.IntegerField(blank=True)
+    telefono = models.TextField(blank=True, max_length=100)
     email = models.EmailField(max_length=100)
     direccion = models.TextField(blank=True, max_length=100)
     nacimiento = models.DateField(blank=True)
