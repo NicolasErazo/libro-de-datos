@@ -6,9 +6,9 @@ TIPO_DOCUMENTO = (("", "Abrir para seleccionar"),("Cedula Ciudadania", "Cedula C
 GENERO =(("", "Abrir para seleccionar"),("M", "Masculino"),("F", "Femenino"),("O", "Otro"))
 EDUCATION =(("", "Abrir para seleccionar"),("Primaria", "Primaria"),("Secundaria", "Secundaria"),("Tecnico", "Tecnico"),("Tecnologo", "Tecnologo"),("Profesional", "Profesional"),("Especialista", "Especialista"))
 OCUPACION =(("", "Abrir para seleccionar"),("Empleado", "Empleado"),("Desempleado", "Desempleado"),("Independiente", "Independiente"),("Estudiante", "Estudiante"))
-DISCAPACIDAD =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"),("2", "Secundaria"),("3", "Tecnico"))
-GRUPO_ETNICO =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"),("2", "Secundaria"),("3", "Tecnico"))
-COMISION =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"),("2", "Secundaria"),("3", "Tecnico"))
+DISCAPACIDAD =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"))
+GRUPO_ETNICO =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"))
+COMISION =(("", "Abrir para seleccionar"),("Ninguna", "Ninguna"))
 
 class crearAfiliado(forms.ModelForm):
     class Meta:
