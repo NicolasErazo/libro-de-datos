@@ -13,10 +13,9 @@
         <div class="col-lg-6">
           <h1 class="display-5 fw-bold lh-1 mb-3">
             {% if user.is_authenticated %}
-            Bienvenido
-            {{ user.get_username }}
+            Bienvenido {{ user.get_username }}
             {% else %}
-            Home
+            Ingresar
             {% endif %}
           </h1>
           <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet natus rem sapiente recusandae impedit, porro omnis error deleniti id animi, minus molestias provident tempore harum vitae. Rerum modi numquam minus!</p>
