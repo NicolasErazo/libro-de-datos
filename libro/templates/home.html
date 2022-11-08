@@ -8,7 +8,11 @@
     <div class="container col-xxl-8 px-4">
       <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-10 col-sm-8 col-lg-6">
-          <img src="{% static 'img/Arbol.png' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="350" height="350" loading="lazy">
+          {% if user.is_authenticated %}
+          <img src="{% static 'img/Escudo2.png' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="550" height="550" loading="lazy">
+          {% else %}
+          <img src="{% static 'img/Manos.png' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="550" height="550" loading="lazy">
+          {% endif %}
         </div>
         <div class="col-lg-6">
           <h1 class="display-5 fw-bold lh-1 mb-3">
@@ -24,8 +28,9 @@
             <a class="btn btn-primary" href="/afiliados/"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Lista de Afiliados</button></a>
             <a class="btn btn-success" href="/afiliados/crear/"><button type="button" class="btn btn-success btn-lg px-4">Crear Afiliado</button></a>
             {% else %}
-            <a class="btn btn-success" href="/signin"><button type="button" class="btn btn-success btn-lg px-4 me-md-2">Login</button></a>
+            <a class="btn btn-success" href="/signin"><button type="button" class="btn btn-success btn-lg px-4 me-md-2">Ingreso</button></a>
             {% endif %}
+            <a class="btn btn-info" href="#"><button type="button" class="btn btn-info btn-lg px-4">Instructivo de Uso</button></a>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@
                 <form action="{% url 'afiliado_completed' afiliado.id %}" method="POST">
     
                     {% csrf_token %}
-                    <button class="btn btn-primary">Archivar</button>
+                    <button class="btn btn-primary">Depurar</button>
     
                 </form>
                 &nbsp
@@ -27,6 +27,13 @@
     
                     {% csrf_token %}
                     <button class="btn btn-danger">Borrar</button>
+    
+                </form>
+                &nbsp
+                <form action="{% url 'afiliado_pdf' afiliado.id %}" method="POST">
+    
+                    {% csrf_token %}
+                    <button class="btn btn-link">Generar PDF</button>
     
                 </form>
             </div>

@@ -29,6 +29,7 @@ urlpatterns = [
     path('afiliados/<int:afiliado_id>/', views.afiliado_detail, name='afiliado_detail'),
     path('afiliados/<int:afiliado_id>/completed', views.afiliado_completed, name='afiliado_completed'),
     path('afiliados/<int:afiliado_id>/delete', views.afiliado_delete, name='afiliado_delete'),
+    path('afiliados/<int:afiliado_id>/pdf', views.afiliado_pdf, name='afiliado_pdf'),
     path('afiliados_completed/', views.afiliados_completed, name='afiliados_completed'),
 
 ]

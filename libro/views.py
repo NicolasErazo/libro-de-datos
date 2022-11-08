@@ -32,6 +32,9 @@ def afiliados(request):
             Q(discapacidad__iexact = search) |
             Q(grupo_etnico__iexact = search) |
             Q(comision_trabajo__iexact = search) |
+            Q(revision_secretarial__iexact = search) |
+            Q(dignatario__iexact = search) |
+            Q(cargo__iexact = search) |
             Q(observaciones__icontains = search) 
 
         )
@@ -98,7 +101,14 @@ def afiliado_delete(request, afiliado_id):
     afiliado = get_object_or_404(Afiliado, pk=afiliado_id, user=request.user)
     if request.method == 'POST':
         afiliado.delete()
-        return redirect('afiliados')  
+        return redirect('afiliados') 
+
+@login_required
+def afiliado_pdf(request, afiliado_id):
+    afiliado = get_object_or_404(Afiliado, pk=afiliado_id, user=request.user)
+    if request.method == 'POST':
+        #Codigo PDF
+        return redirect('afiliados')           
 
 def signup(request):
 
