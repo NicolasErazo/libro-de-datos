@@ -25,12 +25,12 @@
           <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet natus rem sapiente recusandae impedit, porro omnis error deleniti id animi, minus molestias provident tempore harum vitae. Rerum modi numquam minus!</p>
           <div class="d-grid gap-2 d-md-flex justify-content-md-start">
             {% if user.is_authenticated %}
-            <a class="btn btn-primary" href="/afiliados/"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Lista de Afiliados</button></a>
-            <a class="btn btn-success" href="/afiliados/crear/"><button type="button" class="btn btn-success btn-lg px-4">Crear Afiliado</button></a>
+            <a href="/afiliados/"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Lista de Afiliados</button></a>
+            <a href="/afiliados/crear/"><button type="button" class="btn btn-success btn-lg px-4">Crear Afiliado</button></a>
             {% else %}
-            <a class="btn btn-success" href="/signin"><button type="button" class="btn btn-success btn-lg px-4 me-md-2">Ingreso</button></a>
+            <a  href="/signin"><button type="button" class="btn btn-success btn-lg px-4 me-md-2">Ingreso</button></a>
             {% endif %}
-            <a class="btn btn-info" href="#"><button type="button" class="btn btn-info btn-lg px-4">Instructivo de Uso</button></a>
+            <a href="#"><button type="button" class="btn btn-info btn-lg px-4">Instructivo de Uso</button></a>
           </div>
         </div>
       </div>
