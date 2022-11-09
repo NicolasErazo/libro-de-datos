@@ -70,7 +70,6 @@ def afiliado_pdf(request, afiliado_id):
 def home(request):
     return render(request, 'home.html')
 
-
 @login_required
 def afiliados(request):
     search = request.GET.get("buscar")
@@ -98,7 +97,6 @@ def afiliados(request):
         )
     return render(request, 'afiliados.html', {'afiliados': afiliados})
 
-
 @login_required
 def afiliado_create(request):
     if request.method == 'GET':
@@ -125,7 +123,6 @@ def afiliado_create(request):
                 'error': 'Por favor seleccione una fecha de nacimiento real'
             })
 
-
 @login_required
 def afiliado_detail(request, afiliado_id):
     if request.method == 'GET':
@@ -144,7 +141,6 @@ def afiliado_detail(request, afiliado_id):
             return render(request, 'afiliado_detail.html', {'afiliado': afiliado, 'form': form,
                                                             'error': 'Error actualizando Afiliado'})
 
-
 @login_required
 def afiliado_completed(request, afiliado_id):
     afiliado = get_object_or_404(Afiliado, pk=afiliado_id, user=request.user)
@@ -153,7 +149,6 @@ def afiliado_completed(request, afiliado_id):
         afiliado.save()
         return redirect('afiliados')
 
-
 @login_required
 def afiliados_completed(request):
     afiliados = Afiliado.objects.filter(
@@ -161,14 +156,12 @@ def afiliados_completed(request):
     ('-datecompletedx')
     return render(request, 'afiliados.html', {'afiliados': afiliados})
 
-
 @login_required
 def afiliado_delete(request, afiliado_id):
     afiliado = get_object_or_404(Afiliado, pk=afiliado_id, user=request.user)
     if request.method == 'POST':
         afiliado.delete()
         return redirect('afiliados')
-
 
 def signup(request):
 
@@ -195,7 +188,6 @@ def signup(request):
             'error': 'Password do not match'
         })
 
-
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
@@ -212,7 +204,6 @@ def signin(request):
         else:
             login(request, user)
             return redirect('home')
-
 
 @login_required
 def exit(request):
