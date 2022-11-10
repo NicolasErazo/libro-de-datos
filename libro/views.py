@@ -43,29 +43,31 @@ def afiliado_pdf(request, afiliado_id):
     NombreMayus = afiliados.nombres.upper()
     now = datetime.now()
 
-    pdf = PDF()
-    pdf.alias_nb_pages()
-    pdf.add_page()
-    pdf.set_font('Arial', '', 12)
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.multi_cell(0,10,'',0, 'J')
-    pdf.set_font('Arial', 'B', 12)
-    pdf.multi_cell(0,10,'______________________________         ______________________________',0, 'C')
-    pdf.multi_cell(0,10,'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ',0, 'C')
-    pdf.multi_cell(0,10,'PRESIDENTE(A)                                           SECRETARIO(A)',0, 'C')
+    if request.method == 'POST':
+        
+        pdf = PDF()
+        pdf.alias_nb_pages()
+        pdf.add_page()
+        pdf.set_font('Arial', '', 12)
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.set_font('Arial', 'B', 12)
+        pdf.multi_cell(0,10,'______________________________         ______________________________',0, 'C')
+        pdf.multi_cell(0,10,'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ',0, 'C')
+        pdf.multi_cell(0,10,'PRESIDENTE(A)                                           SECRETARIO(A)',0, 'C')
 
-    response = HttpResponse(pdf.output(dest='S').encode('latin-1'), content_type='application/pdf')
-    response['Content-Disposition'] = f"attachment; filename=Afiliado_{afiliados.nombres}.pdf"
-    return response
+        response = HttpResponse(pdf.output(dest='S').encode('latin-1'), content_type='application/pdf')
+        response['Content-Disposition'] = f"attachment; filename=Afiliado_{afiliados.nombres}.pdf"
+        return response
 
 def home(request):
     return render(request, 'home.html')
