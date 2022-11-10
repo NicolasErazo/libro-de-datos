@@ -44,7 +44,6 @@ def afiliado_pdf(request, afiliado_id):
     now = datetime.now()
 
     if request.method == 'POST':
-        
         pdf = PDF()
         pdf.alias_nb_pages()
         pdf.add_page()
