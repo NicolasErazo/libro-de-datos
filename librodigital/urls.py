@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/', views.exit, name='logout'),
     path('signin/', views.signin, name='signin'),
     path('afiliados/', views.afiliados, name='afiliados'),
+    path('asistencia/', views.asistencia, name='asistencia'),
     path('afiliados/crear/', views.afiliado_create, name='afiliado_create'),
     path('afiliados/<int:afiliado_id>/', views.afiliado_detail, name='afiliado_detail'),
     path('afiliados/<int:afiliado_id>/completed', views.afiliado_completed, name='afiliado_completed'),
