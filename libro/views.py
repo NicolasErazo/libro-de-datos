@@ -17,7 +17,7 @@ from libro.models import Afiliado
 class PDF(FPDF):
     def header(self):
         # Logo
-        self.image('libro\static\img\Escudo.png', 10, 8, 33)
+        self.image('libro/static/img/Escudo.png', 10, 8, 33)
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
