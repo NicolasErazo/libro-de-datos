@@ -46,10 +46,9 @@ class crearUsuario(forms.ModelForm):
     class Meta:
         
         model = Usuario
-        fields = ['nombres','tipo_documento', 'numero_documento','asistencia']
+        fields = ['nombres','numero_documento','asistencia']
         widgets = {
             'nombres': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_documento' : forms.Select(choices=TIPO_DOCUMENTO, attrs={'class': 'form-select'}),
             'numero_documento' : forms.NumberInput(attrs={'class': 'form-control'}),
             'asistencia' : forms.Select(choices = ASISTENCIA, attrs={'class': 'form-select'}),
         }

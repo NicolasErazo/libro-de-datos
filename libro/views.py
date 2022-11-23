@@ -11,33 +11,11 @@ from django.http import HttpResponse
 from datetime import datetime
 
 from libro.forms import crearAfiliado
+from libro.pdf import PDFTable, PDF
 from libro.models import Afiliado
 from libro.forms import crearUsuario
 from libro.models import Usuario
 
-
-# Generate PDF
-class PDF(FPDF):
-    def header(self):
-        # Logo
-        self.image('libro/static/img/Escudo.png', 10, 8, 33)
-        # Arial bold 15
-        self.set_font('Arial', 'B', 15)
-        # Move to the right
-        self.cell(80)
-        # Title
-        self.cell(10, 10, 'CONSTANCIA DE AFILIACIÓN', 0, 0)
-        # Line break
-        self.ln(20)
-
-    # Page footer
-    def footer(self):
-        # Position at 1.5 cm from bottom
-        self.set_y(-15)
-        # Arial italic 8
-        self.set_font('Arial', 'I', 8)
-        # Page number
-        self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
 @login_required
 def afiliado_pdf(request, afiliado_id):
@@ -52,25 +30,32 @@ def afiliado_pdf(request, afiliado_id):
         pdf.alias_nb_pages()
         pdf.add_page()
         pdf.set_font('Arial', '', 12)
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,'',0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(
+            0, 10, f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(
+            0, 10, f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
         pdf.set_font('Arial', 'B', 12)
-        pdf.multi_cell(0,10,'______________________________         ______________________________',0, 'C')
-        pdf.multi_cell(0,10,'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ',0, 'C')
-        pdf.multi_cell(0,10,'PRESIDENTE(A)                                           SECRETARIO(A)',0, 'C')
+        pdf.multi_cell(
+            0, 10, '______________________________         ______________________________', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'PRESIDENTE(A)                                           SECRETARIO(A)', 0, 'C')
 
-        response = HttpResponse(pdf.output(dest='S').encode('latin-1'), content_type='application/pdf')
+        response = HttpResponse(pdf.output(dest='S').encode(
+            'latin-1'), content_type='application/pdf')
         response['Content-Disposition'] = f"attachment; filename=Afiliado_{afiliados.nombres}.pdf"
         return response
+
 
 def home(request):
     return render(request, 'home.html')
@@ -103,10 +88,12 @@ def afiliados(request):
         )
     return render(request, 'afiliados.html', {'afiliados': afiliados})
 
+
 @login_required
 def asistencia(request):
-    usuarios = Usuario.objects.filter()
+    usuarios = Usuario.objects.all()
     return render(request, 'asistencia.html', {'usuarios': usuarios})
+
 
 @login_required
 def usuario_create(request):
@@ -134,13 +121,7 @@ def usuario_create(request):
                 'form': crearUsuario,
                 'error': 'Por favor seleccione una fecha de nacimiento real'
             })
-            
-@login_required
-def usuario_delete(request, afiliado_id):
-    usuario = get_object_or_404(Usuario, pk=afiliado_id)
-    if request.method == 'POST':
-        usuario.delete()
-        return redirect('asistencia')
+
 
 @login_required
 def afiliado_create(request):
@@ -167,6 +148,69 @@ def afiliado_create(request):
                 'form': crearAfiliado,
                 'error': 'Por favor seleccione una fecha de nacimiento real'
             })
+
+
+@login_required
+def usuario_delete(request, afiliado_id):
+    usuario = get_object_or_404(Usuario, pk=afiliado_id)
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('asistencia')
+
+
+@login_required
+def all_delete(request):
+
+    if request.method == 'GET':
+        now = datetime.now()
+        usuarios = Usuario.objects.all()
+        data = [['Nombres y Apellidos',
+                 'Documento de Identidad', 'Asistencia Asamblea']]
+
+        for usuario in usuarios:
+            data.append(
+                [usuario.nombres, usuario.numero_documento, usuario.asistencia])
+
+        print(data)
+        pdf = PDFTable()
+        pdf.alias_nb_pages()
+        pdf.add_page()
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.set_font('Times', '', 10.0)
+        epw = pdf.w - 2*pdf.l_margin
+        col_width = epw/3
+        th = pdf.font_size
+        pdf.ln(4*th)
+        pdf.cell(epw, 0.0, '', align='C')
+        pdf.set_font('Times', '', 14.0)
+        pdf.ln(0.5)
+
+        for row in data:
+            for datum in row:
+                # Enter data in colums
+                pdf.cell(col_width, 2*th, str(datum), border=1, align='C')
+
+            pdf.ln(2*th)
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.multi_cell(0, 10, '', 0, 'J')
+        pdf.set_font('Arial', 'B', 12)
+        pdf.multi_cell(
+            0, 10, '______________________________         ______________________________', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'ANSELMO QUEVEDO                                 CLAUDIA PATRICIA PAEZ', 0, 'C')
+        pdf.multi_cell(
+            0, 10, 'PRESIDENTE(A)                                           SECRETARIO(A)', 0, 'C')    
+
+        response = HttpResponse(pdf.output(dest='S').encode(
+            'latin-1'), content_type='application/pdf')
+        response['Content-Disposition'] = f"attachment; filename=Asistencia_{now.day}/{now.month}/{now.year}.pdf"
+        usuarios.delete()
+        return response
 
 
 @login_required
@@ -250,7 +294,7 @@ def signin(request):
         if user is None:
             return render(request, 'signin.html', {
                 'form': AuthenticationForm,
-                'error': 'Username or Password is incorrect'
+                'error': 'Usuario o Contraseña Incorrectos'
             })
         else:
             login(request, user)

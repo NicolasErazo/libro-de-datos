@@ -32,7 +32,6 @@ class Afiliado(models.Model):
 class Usuario(models.Model):
     
     nombres = models.TextField(max_length=100)
-    tipo_documento = models.TextField(max_length=100)
     numero_documento = models.BigIntegerField()
     asistencia = models.CharField(max_length=10)
   
