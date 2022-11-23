@@ -28,3 +28,11 @@ class Afiliado(models.Model):
 
     def __str__(self):
         return self.nombres + '- by: ' + self.user.username
+
+class Usuario(models.Model):
+    
+    nombres = models.TextField(max_length=100)
+    tipo_documento = models.TextField(max_length=100)
+    numero_documento = models.BigIntegerField()
+    asistencia = models.CharField(max_length=10)
+  

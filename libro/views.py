@@ -6,12 +6,15 @@ from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from fpdf import FPDF 
+from fpdf import FPDF
 from django.http import HttpResponse
 from datetime import datetime
 
 from libro.forms import crearAfiliado
 from libro.models import Afiliado
+from libro.forms import crearUsuario
+from libro.models import Usuario
+
 
 # Generate PDF
 class PDF(FPDF):
@@ -51,9 +54,9 @@ def afiliado_pdf(request, afiliado_id):
         pdf.set_font('Arial', '', 12)
         pdf.multi_cell(0,10,'',0, 'J')
         pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.day}/{afiliados.created.month}/{afiliados.created.year}.',0, 'J')
+        pdf.multi_cell(0,10,f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.',0, 'J')
         pdf.multi_cell(0,10,'',0, 'J')
-        pdf.multi_cell(0,10,f'Se expide en el municipio de Acacias en la fecha {now.day}/{now.month}/{now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados',0, 'J')
+        pdf.multi_cell(0,10,f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados',0, 'J')
         pdf.multi_cell(0,10,'',0, 'J')
         pdf.multi_cell(0,10,'',0, 'J')
         pdf.multi_cell(0,10,'',0, 'J')
@@ -102,10 +105,42 @@ def afiliados(request):
 
 @login_required
 def asistencia(request):
-    afiliados = Afiliado.objects.filter(
-        user=request.user, datecompleted__isnull=True)
+    usuarios = Usuario.objects.filter()
+    return render(request, 'asistencia.html', {'usuarios': usuarios})
 
-    return render(request, 'asistencia.html', {'afiliados': afiliados})
+@login_required
+def usuario_create(request):
+    if request.method == 'GET':
+        return render(request, 'usuario_create.html', {
+            'form': crearUsuario
+        })
+    else:
+        try:
+            print(request.POST)
+            form = crearUsuario(request.POST)
+            nuevo_usuario = form.save(commit=False)
+            nuevo_usuario.user = request.user
+            nuevo_usuario.save()
+            return redirect('asistencia')
+
+        except ValueError:
+            return render(request, 'usuario_create.html', {
+                'form': crearUsuario,
+                'error': 'Por favor proporcione datos válidos'
+            })
+
+        except IntegrityError:
+            return render(request, 'usuario_create.html', {
+                'form': crearUsuario,
+                'error': 'Por favor seleccione una fecha de nacimiento real'
+            })
+            
+@login_required
+def usuario_delete(request, afiliado_id):
+    usuario = get_object_or_404(Usuario, pk=afiliado_id)
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('asistencia')
 
 @login_required
 def afiliado_create(request):
