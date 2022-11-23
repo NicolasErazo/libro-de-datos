@@ -33,7 +33,7 @@ def afiliado_pdf(request, afiliado_id):
         pdf.multi_cell(0, 10, '', 0, 'J')
         pdf.multi_cell(0, 10, '', 0, 'J')
         pdf.multi_cell(
-            0, 10, f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.year}-{afiliados.created.month}-{afiliados.created.day}, en el folio 2 con el número de registro 2 del libro de afiliados.', 0, 'J')
+            0, 10, f'La Junta De Accion Comunal BARRIO PABLO SEXTO del municipio de Acacias - Meta, a solicitud del interesado informa que el(la) Señor(a) {NombreMayus}, identificado(a) con la {afiliados.tipo_documento} número {afiliados.numero_documento} está afiliado(a) a esta Organización de Acción Comunal desde el {afiliados.created.day}/{afiliados.created.month}/{afiliados.created.year}', 0, 'J')
         pdf.multi_cell(0, 10, '', 0, 'J')
         pdf.multi_cell(
             0, 10, f'Se expide en el municipio de Acacias el día {now.day} de {now.month} de {now.year}. Puede verificar la autenticidad de este documento ingresando a la pagina web https://librodigital.onrender.com en la seccion de edición de Afiliados', 0, 'J')
